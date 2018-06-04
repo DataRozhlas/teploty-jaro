@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+<!--- do systemu odsud dál -->
+
+<style>
+    #container {
+        min-width: 380;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+</style>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/boost.js"></script>
+<script src="data/libus.js"></script>
+
+
+<div id="container"></div>
+
+<script>
+
+var pnts = []
+var pnts_rec = []
+
+Object.keys(temps).forEach(function(k) {
+    var col = 'rgba(158,202,225, .5)'
+    if (parseInt(k) > 2017) {
+        col = 'rgba(222,45,38, .5)'
+    }
+    pnts.push({
+        name: 'Teploty ' + k,
+        color: col,
+        data: temps[k],
+        marker: {
+            enabled: true,
+            symbol: 'circle',
+            radius: 1
+        }
+    })
+    pnts.push([parseFloat(k), temps[k]])
+});
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'scatter',
+        zoomType: 'xy'
+    },
+    legend: {
+        enabled: false
+    },
+    credits: {
+        enabled: false
+    },
+    title: {
+        text: 'Průměrné teploty v Praze-Libuši'
+    },
+    subtitle: {
+        text: 'data NOAA, rok 2018 vyznačený červeně'
+    },
+    xAxis: {
+        title: {
+            enabled: true,
+            text: 'datum'
+        },
+        showLastLabel: true,
+        labels: {
+            formatter: function() {
+                var date = new Date(this.value * 1000)
+                return date.getDate() + '. ' + (date.getMonth() + 1) + '.';
+            }
+        } 
+    },
+    yAxis: {
+        title: {
+            text: 'průměrná denní teplota (°C)'
+        }
+    },
+    tooltip: {
+                formatter: function () {
+                    var date = new Date(this.x * 1000)
+                    var dt = date.getDate() + '. ' + (date.getMonth() + 1) + '. ' + this.series.name.replace('Teploty ', '')
+                    return 'Průměrná teplota <b>' + dt + '</b> byla <b>' + Math.round(this.y * 10) / 10 + '</b> °C';
+                }
+    },
+    plotOptions: {
+        scatter: {
+            marker: {
+                radius: 1,
+                states: {
+                    hover: {
+                        enabled: true,
+                        lineColor: 'rgb(100,100,100, 0.5)'
+                    }
+                }
+            },
+            states: {
+                hover: {
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+        }
+    },
+    series: pnts
+});
+
+</script>

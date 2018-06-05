@@ -36,7 +36,7 @@ Object.keys(temps).forEach(function(k) {
         marker: {
             enabled: true,
             symbol: 'circle',
-            radius: 1
+            radius: 2
         }
     })
     pnts.push([parseFloat(k), temps[k]])
@@ -54,10 +54,11 @@ Highcharts.chart('container', {
         enabled: false
     },
     title: {
-        text: 'Průměrné teploty v Praze-Libuši'
+        text: 'Průměrné jarní teploty v Praze-Libuši od roku 1973'
     },
     subtitle: {
-        text: 'data NOAA, rok 2018 vyznačený červeně'
+        text: 'data <a style="text-decoration: underline;" target="_blank" href="https://www.ncdc.noaa.gov/cdo-web/">NOAA</a>,' 
+            + ' <span style="color: #de2d26;">rok 2018 vyznačený červeně</span>'
     },
     xAxis: {
         title: {

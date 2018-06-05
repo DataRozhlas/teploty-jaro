@@ -22,7 +22,6 @@
 <script>
 
 var pnts = []
-var pnts_rec = []
 
 Object.keys(temps).forEach(function(k) {
     var col = 'rgba(158,202,225, .5)'
@@ -39,7 +38,6 @@ Object.keys(temps).forEach(function(k) {
             radius: 2
         }
     })
-    pnts.push([parseFloat(k), temps[k]])
 });
 
 Highcharts.chart('container', {
@@ -107,5 +105,4 @@ Highcharts.chart('container', {
     },
     series: pnts
 });
-
 </script>
